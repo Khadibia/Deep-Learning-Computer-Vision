@@ -1,4 +1,4 @@
-## Welcome To my Deep Learning Repo!
+# Welcome To my Deep Learning Repo!
 In here contains my deep learning works from my 50-day deep learning self-challenge!
 
 ## I sought a dataset that wouldn't overwhelm my hardware, and i came across Sugarcane Leaf Disease Dataset on kaggle 👉 https://lnkd.in/dP8R8rvJ. 
