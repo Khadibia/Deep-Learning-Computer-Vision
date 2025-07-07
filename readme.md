@@ -35,3 +35,24 @@ I experimented with callbacks on the CNN model i built to classify and detect br
 I went back again, reducing the learning rate, removed a layer, increased dropout, while adding more augmentations. I also tried a new scheduler; the ReduceLROnPlateau scheduler, which reduces learning rate if validation loss stalls. This whole training process/fine tuning was carried out/repeated ~five times.
 
 This time, the early stopping was triggered after the fifth epoch, with training accuracy at 67% and validation accuracy at 53%. More can and will be done to improve this peak and drop of the validation accuracy.
+
+
+## Cat Breed Classifier (Dataset https://www.kaggle.com/datasets/nikolasgegenava/cat-breeds)
+
+I went back to the Cat Breed dataset with 66 classes. To enable this run fine on my hardware, i manually removed 50 of these classes, using stepwise selection, twice over the classes.
+
+
+
+Resnet 50 was to heavy and slow for my hardware from the last time, so i went for the lesser Restnet34 this time, also from torchvision. I applied KFold cross-validation, to test the model on every part of the data, rather than one. I split the whole data into five parts, and trained for six epochs each.
+
+
+
+Prior to that, i changed the final fully connected layers from Resnet34, from its out_feature of 1000 to suit my 16 classes. After which it had 135,440 trainable parameters out of 21,420,112.
+
+
+
+For the metrics across the five folds; 
+
+There was fine generalisation, with loss decreasing across epochs. Validation loss was used as the tracker during the training. 
+
+There was a minor fluctuation in validation accuracy, from 59% to 68%, but overall upward trend.
