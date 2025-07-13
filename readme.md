@@ -41,18 +41,22 @@ This time, the early stopping was triggered after the fifth epoch, with training
 
 I went back to the Cat Breed dataset with 66 classes. To enable this run fine on my hardware, i manually removed 50 of these classes, using stepwise selection, twice over the classes.
 
-
-
 Resnet 50 was to heavy and slow for my hardware from the last time, so i went for the lesser Restnet34 this time, also from torchvision. I applied KFold cross-validation, to test the model on every part of the data, rather than one. I split the whole data into five parts, and trained for six epochs each.
 
-
-
 Prior to that, i changed the final fully connected layers from Resnet34, from its out_feature of 1000 to suit my 16 classes. After which it had 135,440 trainable parameters out of 21,420,112.
-
-
-
-For the metrics across the five folds; 
-
+ 
 There was fine generalisation, with loss decreasing across epochs. Validation loss was used as the tracker during the training. 
 
 There was a minor fluctuation in validation accuracy, from 59% to 68%, but overall upward trend.
+
+
+## Fine-Tuning YOLO To Detect and Classify Road Signs
+(https://universe.roboflow.com/costom-s6gdy/road-signs-c6yoa)
+
+I began by exploring Roboflow, an amazing place and wonder how i didnt know about the platform until TODAY. However, i downloaded a dataset on traffic signs. Roboflow allows the addition of augmentation and preprocessing which i found really great. For this preprocessing this dataset, i resized all images to 224x224, Auto-Adjusted Contrast using histogram equalization, and auto applied auto-orientation. Augmentations added include duplicating each sample for clockwise, counter-clockwise 90 degrees rotation, rotation between -15° and +15° and hue between -15° and +15°.
+
+I started out locally but moved to Google Colab midway to harness the power of GPU. I moved on there, and loaded Yolov5, by cloning the Ultralytics Yolov5 repo on github. Then i set up the dataset folder and wrote a yaml file (where i added custom classes as YOLO isn't trained to detect road signs) for the training.
+
+Finally i trained the model on the road signs dataset for 50 epochs with 16 batches. Training lasted just about half an hour. Though i had to do this thrice due to runtime disconnects. I came across the mAP scoring metric, which stands for mean Average Precision. It tells you how good the model is at both locating and correctly classifying objects. AP (Average Precision) is calculated for each class, and mAP is the average of all the APs across all classes. Usually, mAP@0.5 which translates to IoU threshold is 0.5 (fairly loose match) and mAP@0.5:0.95, stricter, averaged across IoUs from 0.5 to 0.95. As mentioned two days ago, IoU is a metric used to evaluate how well the predicted bounding box (model's detection/mapping) overlaps with the ground truth box (the actual object on the image). 
+
+The mAP@0.5 and mAP@0.5:0.95 scores are 92% and 73% respectively. Other metrics; precision of 88% and recall of 90.5%. The full results are captured below, along with some tests. These metrics show the model’s ability to detect signs accurately and consistently, with particularly strong performance on sign class like "Give Way", "School Ahead", and "Go Slow". Some classes like "Narrow Bridge Ahead", however, had slightly lower performance.
