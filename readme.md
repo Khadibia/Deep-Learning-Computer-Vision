@@ -60,3 +60,14 @@ I started out locally but moved to Google Colab midway to harness the power of G
 Finally i trained the model on the road signs dataset for 50 epochs with 16 batches. Training lasted just about half an hour. Though i had to do this thrice due to runtime disconnects. I came across the mAP scoring metric, which stands for mean Average Precision. It tells you how good the model is at both locating and correctly classifying objects. AP (Average Precision) is calculated for each class, and mAP is the average of all the APs across all classes. Usually, mAP@0.5 which translates to IoU threshold is 0.5 (fairly loose match) and mAP@0.5:0.95, stricter, averaged across IoUs from 0.5 to 0.95. As mentioned two days ago, IoU is a metric used to evaluate how well the predicted bounding box (model's detection/mapping) overlaps with the ground truth box (the actual object on the image). 
 
 The mAP@0.5 and mAP@0.5:0.95 scores are 92% and 73% respectively. Other metrics; precision of 88% and recall of 90.5%. The full results are captured below, along with some tests. These metrics show the model’s ability to detect signs accurately and consistently, with particularly strong performance on sign class like "Give Way", "School Ahead", and "Go Slow". Some classes like "Narrow Bridge Ahead", however, had slightly lower performance.
+
+## Face Recognition with MTCNN
+This project started with a simple goal: pull a YouTube video and run face recognition on it. I picked one of MrBeast’s videos where Neymar featured, clipped the first minute, and built a system that could tell if MrBeast, Neymar, neither, or both were in each frame.
+
+I loaded the saved reference embeddings I generated yesterday and added the comparison logic. For each new face, MTCNN took care of detection and cropping, then InceptionResnetV1 extracted a 512 dimensional embedding, then compared its similarity to the saved embeddings.
+
+If the similarity crossed 0.9, it got tagged as a known face. If not, it was labelled “Unknown.”
+
+Overall, it worked decently. But one unknown face was misclassified as MrBeast. I only used five images of him to extract his faceprints, so I’m guessing the average embedding isn’t diverse enough to represent him properly. Perhaps more varied reference images would help improve this.
+
+Still, it’s satisfying seeing the full system in action from start to finish.
