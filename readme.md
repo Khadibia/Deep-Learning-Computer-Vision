@@ -71,3 +71,15 @@ If the similarity crossed 0.9, it got tagged as a known face. If not, it was lab
 Overall, it worked decently. But one unknown face was misclassified as MrBeast. I only used five images of him to extract his faceprints, so I’m guessing the average embedding isn’t diverse enough to represent him properly. Perhaps more varied reference images would help improve this.
 
 Still, it’s satisfying seeing the full system in action from start to finish.
+
+## Diffusion from Scratch – Denoising Latents with U-Net and Scheduler
+This project is a hands-on implementation of a basic denoising diffusion pipeline, built from the ground up using PyTorch. It demonstrates how generative models can transform pure noise into a coherent image using step-by-step denoising.
+
+Key components include:
+Random latent vector generation
+Classifier-free guidance using both unconditioned and text-conditioned embeddings
+U-Net-based noise prediction
+Denoising scheduler to progressively refine the latent over multiple steps
+Visualisation of the generation process across timesteps
+
+The goal was to deeply understand how diffusion models work under the hood — from the raw latent space to image formation — without relying on high-level libraries or prepackaged abstractions.
